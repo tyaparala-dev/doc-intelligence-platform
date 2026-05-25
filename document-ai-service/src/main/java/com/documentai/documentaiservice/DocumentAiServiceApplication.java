@@ -1,0 +1,13 @@
+package com.documentai.documentaiservice;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class DocumentAiServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DocumentAiServiceApplication.class, args);
+    }
+
+}
