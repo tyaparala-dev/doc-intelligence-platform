@@ -1,0 +1,48 @@
+services:
+  postgres-vector:
+    image: pgvector/pgvector:pg16
+    container_name: doc_platform_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: doc_intelligence
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - platform-network
+
+  mongodb:
+    image: mongo:7.0
+    container_name: doc_platform_mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: doc_metadata
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+    volumes:
+      - mongodata:/data/db
+    networks:
+      - platform-network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: doc_platform_ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+    networks:
+      - platform-network
+
+volumes:
+  pgdata:
+  mongodata:
+  ollama_storage:
+
+networks:
+  platform-network:
+    driver: bridge
+
